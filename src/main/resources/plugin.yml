@@ -1,0 +1,4 @@
+name: HotTime
+version: '@version@'
+main: net.teamuni.hottime.HotTime
+api-version: 1.18

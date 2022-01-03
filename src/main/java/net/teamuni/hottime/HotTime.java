@@ -18,11 +18,11 @@ public final class HotTime extends JavaPlugin {
         // config.yml 셋업
         config = new Config();
 
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         // 이벤트 목록을 불러와서 전부 실행
         for (Task task : config.tasks.values()) {
             Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                String time = format.format(new Date((System.currentTimeMillis())));
+                String time = format.format(new Date());
 
                 if (time.equals(task.getTime()+":00")) {
                     task.run();

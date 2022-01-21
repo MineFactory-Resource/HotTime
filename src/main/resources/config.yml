@@ -1,16 +1,14 @@
-# # 핫타임 설정 방법
-#핫타임 이름:
-#  time: 'HH:mm' # 시간 표기 : 오전 8시 정각일 경우 08:00, 오후 8시 30분일 경우 20:30으로 표기
-#  commands: # 지급 명령어 : 1개 이상의 명령어 작성 가능
-#    - 'say event' # 전체 지급 명령어일 경우 명령어만 입력
-#    - 'give %p minecraft:stone 1' # 개인 지급 명령어일 경우 닉네임 부분에 %p을 작성하여 입력
+events:
+  test1:
+    time: '00:00'
+    before: '&e60&f초 후 &c핫타임 &f아이템이 지급됩니다.'
+    after: '&c핫타임 &f아이템을 지급하였습니다.'
+    commands:
+      - 'say example reward'
 
-event1:
-  time: '00:00'
-  commands:
-    - 'say event1'
-
-breaktime:
-  time: '12:30'
-  commands:
-    - 'say event2'
+  breaktime:
+    time: '12:30'
+    before: ''
+    after: '&d깜짝 이벤트!'
+    commands:
+      - 'say event2'

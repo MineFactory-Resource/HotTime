@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'kr.entree.spigradle' version '2.3.4'
 }
 
 group = 'net.teamuni'
@@ -7,10 +8,7 @@ version = '1.0.0'
 
 repositories {
     mavenCentral()
-    maven {
-        name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
+    spigotmc()
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
@@ -18,8 +16,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT'
-    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+    compileOnly spigot("1.18.1-R0.1-SNAPSHOT")
+}
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 def targetJavaVersion = 8
@@ -38,11 +40,6 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
-processResources {
-    def props = [version: version]
-    inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-        expand props
-    }
+spigot {
+    apiVersion '1.18'
 }

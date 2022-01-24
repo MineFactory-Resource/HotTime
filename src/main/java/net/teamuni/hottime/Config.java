@@ -34,10 +34,11 @@ public class Config {
 
     // config.yml 파일에서 짜여진 이벤트 정보 불러오기
     public void getTask() {
-        for(String s: config.getKeys(false)) {
-            ConfigurationSection section = config.getConfigurationSection(s);
+        for(String s: config.getConfigurationSection("events").getKeys(false)) {
+            ConfigurationSection section = config.getConfigurationSection("events").getConfigurationSection(s);
             tasks.put(s, new Task(s, section));
 
         }
     }
+
 }

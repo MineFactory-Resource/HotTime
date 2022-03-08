@@ -2,6 +2,7 @@ package net.teamuni.hottime;
 
 import static net.teamuni.hottime.HotTime.getInstance;
 
+import net.teamuni.hottime.api.votifier.VotifierData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -65,10 +66,33 @@ public class Task {
     // 이벤트 명령어 목록 실행
     public void run() {
         for (String cmd : cmds) {
-            if (cmd.contains("%p")) {
+            // 명령어에 %player%가 포함되어 있을 경우
+            if (cmd.contains("%player%")) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd.replace("%p", p.getName()));
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd.replace("%player%", p.getName()));
                 }
+
+            // 명령어에 %vote_player%가 포함 되어있을 경우
+            } else if (cmd.contains("%vote_player%")) {
+                // 서버에 NuVotifier 플러그인을 적용 중일 경우
+                if (Bukkit.getPluginManager().getPlugin("Votifier") != null) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (VotifierData.getUUIDList().contains(p.getUniqueId()))
+                            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd.replace("%vote_player%", p.getName()));
+                    }
+                }
+
+            // 명령어에 %no_vote_player%가 포함 되어있을 경우
+            } else if (cmd.contains("%no_vote_player%")) {
+                // 서버에 NuVotifier 플러그인을 적용 중일 경우
+                if (Bukkit.getPluginManager().getPlugin("Votifier") != null) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (!VotifierData.getUUIDList().contains(p.getUniqueId()))
+                            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd.replace("%no_vote_player%", p.getName()));
+                    }
+                }
+
+            // 명령어에 플레이스홀더가 존재하지 않는 경우
             } else {
                 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd);
             }
